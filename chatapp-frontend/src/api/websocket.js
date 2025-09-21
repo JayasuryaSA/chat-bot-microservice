@@ -4,8 +4,11 @@ import SockJS from 'sockjs-client';
 let stompClient = null;
 
 export function connect(roomId, onMessageReceived, onLoadHistory) {
-  // Updated URL to match backend STOMP endpoint
+  
   const socket = new SockJS('http://localhost:8765/chat-service/chat');
+
+  //const socket = new SockJS('/chat-service/chat');
+
   stompClient = new Client({
     webSocketFactory: () => socket,
     reconnectDelay: 5000,

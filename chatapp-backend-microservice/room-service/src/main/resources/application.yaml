@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: room-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/roomdb
+
+server:
+  port: 8081
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    registerWithEureka: true
+    fetchRegistry: true
+
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          autoconfigure:
+            web: DEBUG
+        web:
+          filter: DEBUG
+          servlet:
+            handler: DEBUG
