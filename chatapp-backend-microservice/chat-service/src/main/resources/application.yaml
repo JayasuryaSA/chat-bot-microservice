@@ -2,10 +2,14 @@ spring:
   application:
     name: chat-service
 
+server:
+  port: 8082   # you can change if needed
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
-
-server:
-  port: 8082
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true

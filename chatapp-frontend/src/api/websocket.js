@@ -7,7 +7,6 @@ export function connect(roomId, onMessageReceived, onLoadHistory) {
   
   const socket = new SockJS('http://localhost:8765/chat-service/chat');
 
-  //const socket = new SockJS('/chat-service/chat');
 
   stompClient = new Client({
     webSocketFactory: () => socket,

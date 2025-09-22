@@ -1,31 +1,46 @@
 spring:
   application:
     name: api-gateway
+
   cloud:
     gateway:
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "http://localhost:5173"
-            allowedMethods: "*"
-            allowedHeaders: "*"
-            allowCredentials: true
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-      routes:
-        - id: chat-service
-          uri: lb://chat-service
-          predicates:
-            - Path=/chat/**
-          filters:
-            - RemoveRequestHeader=Cookie
-        - id: room-service
-          uri: lb://room-service
-          predicates:
-            - Path=/room-service/**
-        # Add other services as needed
+      server:
+        webflux:
+          # Global CORS configuration for room-service
+          globalcors:
+            cors-configurations:
+              '/room-service/**':
+                allowed-origins:
+                  - "http://localhost:5173"
+                allowed-methods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - OPTIONS
+                allowed-headers: "*"
+                allow-credentials: true
+
+          # Service discovery through Eureka
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+
+          # Routes
+          routes:
+            - id: room-service
+              uri: lb://room-service
+              predicates:
+                - Path=/room-service/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: chat-service
+              uri: lb://chat-service
+              predicates:
+                - Path=/chat-service/**
+              filters:
+                - RemoveRequestHeader=Cookie
 
 server:
   port: 8765
@@ -34,5 +49,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+    registerWithEureka: true
+    fetchRegistry: true
   instance:
     prefer-ip-address: true
