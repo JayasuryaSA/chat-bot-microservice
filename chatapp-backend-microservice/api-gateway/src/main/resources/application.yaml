@@ -6,21 +6,6 @@ spring:
     gateway:
       server:
         webflux:
-          # Global CORS configuration for room-service
-          globalcors:
-            cors-configurations:
-              '/room-service/**':
-                allowed-origins:
-                  - "http://localhost:5173"
-                allowed-methods:
-                  - GET
-                  - POST
-                  - PUT
-                  - DELETE
-                  - OPTIONS
-                allowed-headers: "*"
-                allow-credentials: true
-
           # Service discovery through Eureka
           discovery:
             locator:
